@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}CookBook{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>{% if current_user.is_authenticated %}Hello, {{ current_user.username }}{% else %}Welcome, Stranger{% endif %}!</h1>
+</div>
+
+  {% for recipe in recipes %}
+    <article class="recipe">
+      <header>
+        <div>
+          <h2><a href="{{ url_for('main.recipe', id=recipe.id)}}">{{ recipe['title'] }}</a></h2>
+          <div class="about">by {{ recipe['author_id'] }} on {{ recipe['created'].strftime('%Y-%m-%d') }}</div>
+          </div>
+          {% if current_user.username == recipe.author_id  or current_user.id == 1 %}
+          <a class="action" href="{{ url_for('main.update', id=recipe['id']) }}">Edit</a>
+        {% endif %}
+
+      </header>
+      <h4>Ingredients:</h4>
+      <p class="ingredients">{% if recipe['public'] or current_user.username == recipe.author_id %}
+          {{ recipe['ingredients'] }}
+        {% else %}
+          This recipe is private
+        {% endif %}</p>
+      <h4>Method:</h4>
+      <p class="method">{% if recipe['public'] or current_user.username == recipe.author_id %}
+          {{ recipe['method'] }}
+        {% else %}
+          This recipe is private
+        {% endif %}</p>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
+

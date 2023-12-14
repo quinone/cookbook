@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}CookBook - Login{% endblock %}
+
+{% block page_content %}
+    <br>
+<h2>You searched for ...</h2>
+<p>{{ searched }}</p>
+<br>
+{% if recipes %}
+    Results in recipes:
+    {% for recipe in recipes %}
+        <a href="{{ url_for('main.recipe', id=recipe.id)}}">{{ recipe.title }}</a><br>
+    {% endfor %}
+
+{% else %}
+    No recipes matched {{ searched }}
+{% endif %}
+<br>
+{% if users %}
+    Results in users:
+    {% for user in users %}
+        {{ user.username }}
+    {% endfor %}
+
+{% else %}
+    No usernames matched {{ searched }}
+{% endif %}
+
+{% endblock %}
