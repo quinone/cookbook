@@ -2,7 +2,6 @@
 
 
 Developed by Eoghan Quinn
-Student number: 12475528
 
 CookBook is a Flask application that allows users submit recipes online and store them.
 Users can then view their own and others public recipes. 
